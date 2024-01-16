@@ -35,7 +35,8 @@ class CommonBaseModel(models.Model):
         abstract = True
 
 class EmployeeProfile(CommonBaseModel):
-    name = models.CharField( max_length=450)
+    account = models.ForeignKey("users.Profile",on_delete=models.CASCADE,blank=True,null=True)
+    name = models.CharField( max_length=450)    
     document = models.FileField(upload_to="Employee-Validity-Check-Doc/" , blank=True, null= True)
 
     def __str__(self) -> str:
@@ -48,6 +49,7 @@ class CompanyProfile(CommonBaseModel):
 
 class JobCategory(CommonBaseModel):
     name = models.CharField( max_length=150)
+    favicon_name = models.CharField( max_length=150 , null=True, blank=True)
     tags = models.TextField(null=True, blank=True) #Need to provide tag separate by comma
 
     def __str__(self):
@@ -66,6 +68,8 @@ class CreateJobPost(CommonBaseModel):
     salary_range_end = models.PositiveIntegerField()
 
     deadline = models.DateField(auto_now=False, auto_now_add=False)
+    full_time = models.BooleanField(default=True)
+    
     
     def __str__(self):
         return self.job_title
