@@ -1,0 +1,29 @@
+{% extends "home/base/base.html" %}
+
+{% block title %}Sign Up{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="card shadow-sm rounded-3 my-4">
+      <div class="card-body">
+        <h4 class="card-title mb-4">Form Title</h4>
+        <form action="" novalidate class="form-group" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="form-group mb-3">
+              {{ field.label }}
+              {{ field }}
+              {% if field.errors %}
+              {% for error in field.errors %}
+              <span class="text-danger">{{error}}</span>
+              {% endfor %}
+              {% endif %}
+            </div>
+          {% endfor %}
+          <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+{% endblock content %}
