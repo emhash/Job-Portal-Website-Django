@@ -1,4 +1,6 @@
 from django.db import models
+from users.models import Profile
+
 import uuid
 
 '''
@@ -36,10 +38,13 @@ class JobSeekerProfile(CommonBaseModel):
     
 
 class JobApplications(CommonBaseModel):
-    job_seeker = models.ForeignKey(JobSeekerProfile, on_delete=models.CASCADE)
+    name = models.CharField( max_length=150, null=True, blank=True)
+    job_seeker = models.ForeignKey(Profile, on_delete=models.CASCADE)
     upload_cv = models.FileField(upload_to="ApplicantCVs")
     job = models.ForeignKey("employee.CreateJobPost", on_delete=models.CASCADE)
-
+    
+    portfolio = models.CharField( max_length=550, null=True, blank=True)
+    cover_letter = models.TextField(null=True, blank= True)
     def __str__(self):
         return f"{self.job_seeker} : {self.job}"
     

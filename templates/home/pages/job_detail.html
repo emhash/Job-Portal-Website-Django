@@ -32,21 +32,21 @@
                 
                 <div class="container">
                     <h4 class="mb-4">Apply For The Job</h4>
-                    <form method = "POST">
+                    <form method = "POST" novalidate enctype="multipart/form-data">
                         {% csrf_token %}
-                        <div class="row g-3">                            
+                        <div class="row g-3">  
+
+                            {% for field in form %}
                             <div class="col-12 col-sm-6">
-                                <input type="email" class="form-control" placeholder="Your Email">
+                                {{field}}
+                                {% if field.errors %}
+                                {% for error in field.errors %}
+                                <p class="text-danger">{{error}}</p>
+                                {% endfor %}
+                                {% endif %}
                             </div>
-                            <div class="col-12 col-sm-6">
-                                <input type="text" class="form-control" placeholder="Portfolio Website Link">
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <input type="file" class="form-control bg-white">
-                            </div>
-                            <div class="col-12">
-                                <textarea class="form-control" rows="5" placeholder="Coverletter(If want to provide)"></textarea>
-                            </div>
+                            {% endfor %}
+
                             <div class="col-12">
                                 <button class="btn btn-primary w-100" type="submit">Apply Now</button>
                             </div>
