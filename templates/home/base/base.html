@@ -56,7 +56,13 @@
                     <a href="{% url "homepage" %}" class="nav-item nav-link active">Home</a>
                     <a href="#" class="nav-item nav-link">About</a>
                     
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <a href="#" class="nav-item nav-link">Contact</a>
+                    <a href="#" class="nav-item nav-link"><i class="fa fa-user"></i> Profile</a>
+                    {% if user.is_authenticated %}
+                    <a href="{% url "user_logout" %}" class="nav-item nav-link"><i class="fa fa-unlock"> </i> Logout</a>
+                    {% else %}
+                    <a href="{% url "user_login" %}" class="nav-item nav-link"><i class="fa fa-key"> </i> Login</a>
+                    {% endif %}
                 </div>
                 {% if user.is_authenticated %}
 
@@ -77,7 +83,20 @@
 
 
         <div class="container mt-2">
-            
+            {% if messages %}
+            {% for message in messages %}
+            <div class="toast-container position-fixed top-10 p-3 end-0">
+                <div class="toast align-items-center text-white bg-{{message.tags}} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                      <div class="toast-body">
+                        {{message}}
+                      </div>
+                      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>          
+            </div>
+            {% endfor %}
+            {% endif %}
         </div>        
 
         {% block content %}{% endblock content %}

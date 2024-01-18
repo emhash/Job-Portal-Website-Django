@@ -26,3 +26,9 @@ def user_register(request):
         "form":form,
     }
     return render(request, "home/pages/register.html", context)
+
+
+def user_logout(request):
+    logout(request)
+    messages.warning(request, "You have been logged out!")
+    return redirect("homepage")
