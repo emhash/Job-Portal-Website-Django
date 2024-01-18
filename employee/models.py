@@ -44,6 +44,7 @@ class EmployeeProfile(CommonBaseModel):
 
 
 class CompanyProfile(CommonBaseModel):
+    name = models.CharField(max_length=150)
     personal_emplyee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE)
     brand_logo = models.FileField(upload_to="LogoOfCompanies")
     about = models.TextField(null=True, blank=True)

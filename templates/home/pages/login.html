@@ -1,8 +1,59 @@
 {% extends "home/base/base.html" %}
+{% load static %}
 {% block title %}Login{% endblock title %}
 {% block content %}
 
-<h1>Log In</h1>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-xxl-4 col-lg-5">
+            <div class="card">
 
+                <div class="card-header pt-4 pb-4 text-center bg-primary">
+                    <a href="{% url "homepage" %}">
+                        <span><img src="{% static "jlogo.jpg" %}" alt="" height="50"></span>
+                    </a>
+                </div>
+
+                <div class="card-body p-4">
+                    
+                    <div class="text-center w-75 m-auto">
+                        <h4 class="text-dark-50 text-center pb-0 fw-bold">Sign In</h4>
+                    </div>
+
+                    <form method = "POST" novalidate>
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="emailaddress" class="form-label">Email address</label>
+                            <input class="form-control" name="user_email" type="email" id="emailaddress" required="" placeholder="Enter your email">
+                        </div>
+
+                        <div class="mb-3">
+                            <a href="#" class="text-muted float-end"><small>Forgot your password?</small></a>
+                            <label for="password" class="form-label">Password</label>
+                            <div class="input-group input-group-merge">
+                                <input type="password" name="user_password" id="password" class="form-control" placeholder="Enter your password">
+                                
+                            </div>
+                        </div>
+
+
+                        <div class="mb-3 mb-0 text-center">
+                            <button class="btn btn-primary" type="submit"> Log In </button>
+                        </div>
+
+                    </form>
+                </div> 
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <p class="text-muted">Don't have an account? <a href="{% url "user_register" %}" class="text-muted ms-1"><b>Sign Up</b></a></p>
+                </div>
+            </div>
+            
+
+        </div> 
+    </div>
+    
+</div>
 
 {% endblock content %}

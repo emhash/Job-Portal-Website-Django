@@ -5,8 +5,21 @@ from django.contrib.auth import authenticate, logout, login
 
 from .forms import UserForm
 
-
 def user_login(request):
+    if request.method == "POST":
+        user_email = request.POST.get('user_email')
+        user_password = request.POST.get('user_password')
+
+        # Authenticate the user
+        user = authenticate(request, username=user_email, password=user_password)
+
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Log in successful!")
+            return redirect("homepage")
+        else:
+            messages.warning(request, "Invalid email or password.")
+
     return render(request, "home/pages/login.html")
 
 def user_register(request):
