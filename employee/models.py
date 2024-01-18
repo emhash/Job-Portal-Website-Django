@@ -46,6 +46,7 @@ class EmployeeProfile(CommonBaseModel):
 class CompanyProfile(CommonBaseModel):
     personal_emplyee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE)
     brand_logo = models.FileField(upload_to="LogoOfCompanies")
+    about = models.TextField(null=True, blank=True)
 
 class JobCategory(CommonBaseModel):
     name = models.CharField( max_length=150)
@@ -62,6 +63,8 @@ class CreateJobPost(CommonBaseModel):
     job_title = models.CharField(max_length=250)
     description = RichTextField()
     requirements = RichTextField()
+    qualification = RichTextField(null=True, blank=True)
+
     location = models.CharField(max_length=450)
     vacancy = models.PositiveIntegerField()
     salary_range_start = models.PositiveIntegerField()
