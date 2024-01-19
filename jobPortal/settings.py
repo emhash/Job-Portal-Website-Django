@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'employee',
     'job_seeker',
     'homepage',
+    'dashboard',
     'ckeditor',
 ]
 

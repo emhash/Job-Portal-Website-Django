@@ -57,15 +57,15 @@
                     <a href="#" class="nav-item nav-link">About</a>
                     
                     <a href="#" class="nav-item nav-link">Contact</a>
-                    <a href="#" class="nav-item nav-link"><i class="fa fa-user"></i> Profile</a>
                     {% if user.is_authenticated %}
+                    <a href="{% url "dashboard" %}" class="nav-item nav-link"><i class="fa fa-user"></i> Dashboard</a>
                     <a href="{% url "user_logout" %}" class="nav-item nav-link"><i class="fa fa-unlock"> </i> Logout</a>
                     {% else %}
                     <a href="{% url "user_login" %}" class="nav-item nav-link"><i class="fa fa-key"> </i> Login</a>
                     {% endif %}
                 </div>
                 {% if user.is_authenticated %}
-
+                
                 {% if user.role == "employee" %}
                 <a href="" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
                 {% elif user.role == "job_seekers" %}

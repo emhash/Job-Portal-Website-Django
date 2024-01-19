@@ -1,0 +1,58 @@
+{% extends "home/base/base.html" %}
+{% block title %}Profile Setup{% endblock title %}
+{% block content %}
+<div class="container mt-3">
+    <div class="row justify-content-center">
+      <div class="col-xxl-4 col-lg-10">
+        <div class="card shadow-sm rounded-3">
+          <form action="" method="POST">
+            {% csrf_token %}
+            <div class="card-header pt-4 pb-4 text-center text-white bg-primary">
+              <h3 class="text-success mb-0">Set Your Profile First</h3>
+            </div>
+            <div class="card-body">
+              <div class="row text-center mb-4">
+                <div class="col-md-6">
+                  <label class="fw-bold">Enter the company personal key</label>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="privet_key" aria-describedby="key-addon">
+                    <span class="input-group-text" id="key-addon"><i class="fas fa-key"></i></span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="fw-bold">Select a company and wait for approval</label>
+                  <select class="form-select" name="selected_company" aria-label="Select company">
+                    <option value="" selected>Choose a company</option>
+                    {% for company in all_company %}
+                      <option value="{{ company.uid }}">{{ company.name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-info px-4">Apply</button>
+              </div>
+            </div>
+          </form>
+          <div class="card-footer bg-primary text-center">
+            <a href="{% url "confirm_employee_profile" %}" class="btn btn-warning mt-3 mb-3">Go Next to Set Company</a>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<script>
+    const inputFields = document.querySelectorAll('.col-md-6 input, .col-md-6 select');
+  
+    inputFields.forEach((field) => {
+      field.addEventListener('input', () => {
+        inputFields.forEach((otherField) => {
+          if (field !== otherField) {
+            otherField.disabled = true;
+          }
+        });
+      });
+    });
+</script>
+  
+{% endblock content %}

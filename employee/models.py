@@ -36,18 +36,37 @@ class CommonBaseModel(models.Model):
 
 class EmployeeProfile(CommonBaseModel):
     account = models.ForeignKey("users.Profile",on_delete=models.CASCADE,blank=True,null=True)
-    name = models.CharField( max_length=450)    
+    name = models.CharField( max_length=450)
+    is_set = models.BooleanField(default=False)   
     document = models.FileField(upload_to="Employee-Validity-Check-Doc/" , blank=True, null= True)
 
     def __str__(self) -> str:
-        return f"{self.name}"
-
-
-class CompanyProfile(CommonBaseModel):
-    name = models.CharField(max_length=150)
-    personal_emplyee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE)
+        return f"Name = {self.name}"
+MAXSIZE = [
+    ('0-10','0-10'),
+    ('10-50','10-50'),
+    ('50-100','50-100'),
+    ('100-500','100-500'),
+    ('500-1000','500-1000'),
+    ('1000+','1000+'),
+]
+class Company(CommonBaseModel):
+    name = models.CharField(max_length=50)
+    trade_licence = models.SlugField()
+    company_size = models.CharField(max_length=100, choices=MAXSIZE)
     brand_logo = models.FileField(upload_to="LogoOfCompanies")
     about = models.TextField(null=True, blank=True)
+    stablished_at = models.DateField(auto_now=False, auto_now_add=False)
+    document = models.FileField(upload_to="ValidCompany/",blank=True, null=True)
+    
+    def __str__(self):
+        return f"company : {self.name}"
+    
+class CompanyProfile(CommonBaseModel):
+    institute = models.ForeignKey(Company, on_delete=models.CASCADE,null=True,blank=True)
+    personal_emplyee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE)
+    
+    
 
 class JobCategory(CommonBaseModel):
     name = models.CharField( max_length=150)
