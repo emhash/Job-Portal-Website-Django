@@ -50,8 +50,10 @@ MAXSIZE = [
     ('500-1000','500-1000'),
     ('1000+','1000+'),
 ]
-class Company(CommonBaseModel):
-    name = models.CharField(max_length=50)
+
+class Company(CommonBaseModel):    
+    first_employee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE, null=True, blank=True)
+    company_name = models.CharField(max_length=50)
     trade_licence = models.SlugField()
     company_size = models.CharField(max_length=100, choices=MAXSIZE)
     brand_logo = models.FileField(upload_to="LogoOfCompanies")
@@ -60,8 +62,17 @@ class Company(CommonBaseModel):
     document = models.FileField(upload_to="ValidCompany/",blank=True, null=True)
     
     def __str__(self):
-        return f"company : {self.name}"
+        return f"company : {self.company_name}"
     
+
+    def save(self, *args, **kwargs):
+        existing_company = Company.objects.filter(trade_licence=self.trade_licence).first()
+
+        if existing_company and existing_company != self:
+            raise ValueError("A company with the same trade license already exists.")
+        else:
+            super().save(*args, **kwargs)
+
 class CompanyProfile(CommonBaseModel):
     institute = models.ForeignKey(Company, on_delete=models.CASCADE,null=True,blank=True)
     personal_emplyee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE)
