@@ -26,7 +26,7 @@ class CompanyForm(forms.ModelForm):
     class Meta:
         model = Company
         fields = "__all__"
-        exclude = ['first_employee']
+        exclude = ['first_employee','secret_key']
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

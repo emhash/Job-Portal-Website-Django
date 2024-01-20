@@ -51,7 +51,7 @@ MAXSIZE = [
     ('1000+','1000+'),
 ]
 
-class Company(CommonBaseModel):    
+class Company(CommonBaseModel):
     first_employee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE, null=True, blank=True)
     company_name = models.CharField(max_length=50)
     trade_licence = models.SlugField()
@@ -60,6 +60,7 @@ class Company(CommonBaseModel):
     about = models.TextField(null=True, blank=True)
     stablished_at = models.DateField(auto_now=False, auto_now_add=False)
     document = models.FileField(upload_to="ValidCompany/",blank=True, null=True)
+    secret_key = models.UUIDField( default= uuid.uuid4, editable=False)
     
     def __str__(self):
         return f"company : {self.company_name}"
@@ -76,7 +77,10 @@ class Company(CommonBaseModel):
 class CompanyProfile(CommonBaseModel):
     institute = models.ForeignKey(Company, on_delete=models.CASCADE,null=True,blank=True)
     personal_emplyee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE)
+    approve = models.BooleanField(default=False)
     
+    def __str__(self):
+        return f"{self.institute} | {self.personal_emplyee.name}"
     
 
 class JobCategory(CommonBaseModel):
